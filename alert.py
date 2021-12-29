@@ -1,11 +1,13 @@
 import requests
 from datetime import datetime
+import pytz
 # import sys
 # sys.path.insert(1, '../utills/discord-webhook')
 from os import environ as env
 from dotenv import load_dotenv
 load_dotenv()
 
+thaitz = pytz.timezone('Asia/Bangkok')
 url = env["DISCORD_PTB_API"]+env["WEBHOOKS_ID"]+"/"+env["DISCORD_TOKEN"]
 
 def sendAlert(**kwargs):
@@ -50,12 +52,12 @@ def sendAlert(**kwargs):
                             },
                             {
                             "name": "Execution Date",
-                            "value": f"""{kwargs["exec_date"].strftime('%Y-%m-%d %H:%M:%S')}""",
+                            "value": f"""{thaitz.localize(kwargs["exec_date"].strftime('%Y-%m-%d %H:%M:%S'))}""",
                             "inline": True
                             },
                             {
                             "name": "End Execution Date",
-                            "value": f"""{(kwargs["end_date"]+7).strftime('%Y-%m-%d %H:%M:%S')}""",
+                            "value": f"""{thaitz.localize(kwargs["end_date"].strftime('%Y-%m-%d %H:%M:%S'))}""",
                             "inline": True
                             },
                             {
@@ -68,7 +70,7 @@ def sendAlert(**kwargs):
                             "url": env["AIRFLOW_ICO"]
                         },
                     "footer": {
-                            "text": str((datetime.now()+7).strftime('%Y-%m-%d %H:%M:%S'))
+                            "text": str(thaitz.localize(datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
                         }
                     }
                 ],
