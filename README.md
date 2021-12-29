@@ -1,2 +1,2 @@
 # discord-webhook-airflow
-discord webhook for send notification about airflow dag status
+Send notification about Airflow dags status to discord
