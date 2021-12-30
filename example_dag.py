@@ -25,7 +25,7 @@ def task_success_alert(context):
 default_args = {
     'owner': 'paan',
     'depends_on_past': False,
-    'email': ['phandit.j@gmail.com'],
+    'email': ['example@email.com'],
     'email_on_failure': True,
     'email_on_retry': False,
     'retries': 1,

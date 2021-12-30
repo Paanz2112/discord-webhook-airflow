@@ -1,20 +1,17 @@
 import requests
 from datetime import datetime
-import pytz
-# import sys
-# sys.path.insert(1, '../utills/discord-webhook')
 from os import environ as env
 from dotenv import load_dotenv
 load_dotenv()
 
-thaitz = pytz.timezone('Asia/Bangkok')
 url = env["DISCORD_PTB_API"]+env["WEBHOOKS_ID"]+"/"+env["DISCORD_TOKEN"]
 
 def sendAlert(**kwargs):
     ## dag_id,task_id,dag_state,exec_date,end_date,job_id_,dag_duration
+
     json_payload = {
-                "username":"Maholan Airflow Dags Notification",
-                "content": "<@&923460791427026964>",
+                "username":"Airflow Dags Notification",
+                "content": "<@&ROLE_ID GOES HERE>",
                 "allowed_mentions": {
                     "parse": ["users", "roles"],
                     "users": []
@@ -23,7 +20,7 @@ def sendAlert(**kwargs):
                     {
                     "author": {
                         "name": "Baby vm etl server",
-                        "url": "https://www.maholan.co.th/",
+                        "url": "https://www.SOME-URL-GOES-HERE.co.th/",
                         "icon_url": env["COMPANY_PROFILE_IMAGE"]
                     },
                     "title": f"""{kwargs["dag_id"]}""",
@@ -52,12 +49,12 @@ def sendAlert(**kwargs):
                             },
                             {
                             "name": "Execution Date",
-                            "value": f"""{thaitz.localize(kwargs["exec_date"].strftime('%Y-%m-%d %H:%M:%S'))}""",
+                            "value": f"""{kwargs["exec_date"].strftime('%Y-%m-%d %H:%M:%S')}""",
                             "inline": True
                             },
                             {
                             "name": "End Execution Date",
-                            "value": f"""{thaitz.localize(kwargs["end_date"].strftime('%Y-%m-%d %H:%M:%S'))}""",
+                            "value": f"""{kwargs["end_date"].strftime('%Y-%m-%d %H:%M:%S')}""",
                             "inline": True
                             },
                             {
@@ -70,13 +67,10 @@ def sendAlert(**kwargs):
                             "url": env["AIRFLOW_ICO"]
                         },
                     "footer": {
-                            "text": str(thaitz.localize(datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+                            "text": str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
                         }
                     }
                 ],
             }
     x = requests.post(url, json=json_payload)
     print("Alert messess status: ",x)
-
-# x = requests.get(url)
-#sendAlert("aqd_batch_beta","FAIL","webservice","ll_mwa_aquadat","aquadat_rawdata")
