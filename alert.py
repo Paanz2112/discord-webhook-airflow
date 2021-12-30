@@ -9,13 +9,13 @@ url = env["DISCORD_PTB_API"]+env["WEBHOOKS_ID"]+"/"+env["DISCORD_TOKEN"]
 def sendAlert(**kwargs):
     ## dag_id,task_id,dag_state,exec_date,end_date,job_id_,dag_duration
     if kwargs["dag_state"] == "success":
-        color = "#119D00"
+        color = "3066993"
     elif kwargs["dag_state"] == "fail":
-        color = "#E72903"
+        color = "15158332"
     elif kwargs["dag_state"] == "retry":
-        color = "#E7C403"
+        color = "16776960"
     else:
-        color = "#03E7E4"
+        color = "5793266"
     json_payload = {
                 "username":"Airflow Dags Notification",
                 "content": "<@&ROLE_ID GOES HERE>",
